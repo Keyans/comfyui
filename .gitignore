@@ -9,6 +9,7 @@ temp/
 user/
 custom_nodes/
 ComfyUI/
+vendor/
 *.log
 *.sqlite
 *.db

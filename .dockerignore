@@ -1,0 +1,10 @@
+.git
+.env
+data
+models
+input
+output
+temp
+user
+*.log
+vendor/**/.git

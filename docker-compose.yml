@@ -6,7 +6,6 @@ services:
       context: .
       args:
         CUDA_BASE_IMAGE: ${CUDA_BASE_IMAGE:-nvidia/cuda:12.8.1-base-ubuntu22.04}
-        COMFYUI_REF: ${COMFYUI_REF:-v0.31.0}
     image: keyans/comfyui-node:${COMFYUI_REF:-v0.31.0}
     restart: unless-stopped
     runtime: nvidia

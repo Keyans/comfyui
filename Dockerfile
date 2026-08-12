@@ -1,7 +1,6 @@
 ARG CUDA_BASE_IMAGE=nvidia/cuda:12.8.1-base-ubuntu22.04
 FROM ${CUDA_BASE_IMAGE}
 
-ARG COMFYUI_REF=v0.31.0
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -17,8 +16,8 @@ ENV VIRTUAL_ENV=/opt/venv \
     PATH=/opt/venv/bin:$PATH
 
 WORKDIR /opt
-RUN git clone --depth 1 --branch "${COMFYUI_REF}" \
-    https://github.com/comfyanonymous/ComfyUI.git /opt/ComfyUI
+COPY vendor/ComfyUI /opt/ComfyUI
+COPY vendor/custom_nodes /opt/ComfyUI/custom_nodes
 
 WORKDIR /opt/ComfyUI
 RUN python3 -m venv "${VIRTUAL_ENV}" \
@@ -29,13 +28,7 @@ RUN python3 -m venv "${VIRTUAL_ENV}" \
     && python3 -m pip install -r requirements.txt
 
 COPY docker/entrypoint.sh /usr/local/bin/comfyui-entrypoint
-COPY config/custom-nodes.lock /opt/config/custom-nodes.lock
-COPY scripts/install-custom-nodes.sh /usr/local/bin/install-custom-nodes
 RUN chmod +x /usr/local/bin/comfyui-entrypoint \
-    && chmod +x /usr/local/bin/install-custom-nodes \
-    && CUSTOM_NODES_DIR=/opt/ComfyUI/custom_nodes \
-       CUSTOM_NODES_LOCK=/opt/config/custom-nodes.lock \
-       /usr/local/bin/install-custom-nodes \
     && find /opt/ComfyUI/custom_nodes -mindepth 2 -maxdepth 2 \
        -name requirements.txt -print0 \
        | while IFS= read -r -d '' requirements; do \

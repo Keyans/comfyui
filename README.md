@@ -20,12 +20,25 @@ Start new versions on a canary port such as `8288`. Do not stop the current `818
 
 ```bash
 cp .env.example .env
+./scripts/prepare-sources.sh
 ./scripts/bootstrap-host.sh
 ./scripts/canary-up.sh
 ```
 
 If Docker Hub is unavailable on a host, set `CUDA_BASE_IMAGE` in `.env`
 to an accessible registry mirror containing the same NVIDIA CUDA image.
+
+For nodes with unreliable GitHub access, prepare and verify source archives
+once on a connected machine, then copy them over the LAN:
+
+```bash
+./scripts/sync-sources.sh \
+  hoson1@192.168.1.129:/home/hoson1/comfyui-platform \
+  hsbd@192.168.1.70:/home/hsbd/comfyui-platform
+```
+
+The `vendor/` cache is excluded from Git. Its exact revisions are defined by
+`config/comfyui.lock` and `config/custom-nodes.lock`.
 
 The host Docker daemon must expose the `nvidia` runtime. GPU selection is
 controlled by `GPU_IDS` through `NVIDIA_VISIBLE_DEVICES`.
