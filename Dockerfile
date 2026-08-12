@@ -18,6 +18,7 @@ ENV VIRTUAL_ENV=/opt/venv \
 WORKDIR /opt
 COPY vendor/ComfyUI /opt/ComfyUI
 COPY vendor/custom_nodes /opt/ComfyUI/custom_nodes
+COPY custom_nodes/QwenOfficialImageEditBridge /opt/ComfyUI/custom_nodes/QwenOfficialImageEditBridge
 
 WORKDIR /opt/ComfyUI
 RUN python3 -m venv "${VIRTUAL_ENV}" \

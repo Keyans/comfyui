@@ -7,7 +7,9 @@ input/
 output/
 temp/
 user/
-custom_nodes/
+custom_nodes/*
+!custom_nodes/QwenOfficialImageEditBridge/
+!custom_nodes/QwenOfficialImageEditBridge/**
 ComfyUI/
 vendor/
 *.log

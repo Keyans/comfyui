@@ -111,6 +111,7 @@ Committed:
 - Container build
 - Custom-node lock file
 - Shared workflows
+- Shared private compatibility nodes
 - Health and deployment scripts
 
 Ignored:
@@ -122,6 +123,11 @@ Ignored:
 - Passwords, tokens, and `.env`
 
 Private nodes such as `hoson-pattern-extract` must be moved into a separate private repository before they can be included in the common image.
+
+`QwenOfficialImageEditBridge` is included as a compatibility node for the
+existing API workflows. Set `QWEN_IMAGE_EDIT_MODEL_DIR` in each host-only
+environment file to the local `Qwen-Image-Edit-2511` directory. The model is
+mounted read-only and is never committed to Git.
 
 ComfyUI Manager is enabled through ComfyUI's native `--enable-manager`
 option. It is intentionally not installed as a second legacy custom node.

@@ -20,6 +20,7 @@ services:
       NVIDIA_DRIVER_CAPABILITIES: compute,utility,video
     volumes:
       - ${COMFYUI_MODELS_DIR:-/srv/comfyui/models}:/data/models
+      - ${QWEN_IMAGE_EDIT_MODEL_DIR:-/srv/comfyui/models/Qwen/Qwen-Image-Edit-2511}:/data/models/Qwen/Qwen-Image-Edit-2511:ro
       - ${COMFYUI_INPUT_DIR:-/srv/comfyui/input}:/data/input
       - ${COMFYUI_OUTPUT_DIR:-/srv/comfyui/output}:/data/output
       - ${COMFYUI_TEMP_DIR:-/srv/comfyui/temp}:/data/temp
