@@ -14,6 +14,7 @@ args=(
   --output-directory /data/output
   --temp-directory /data/temp
   --user-directory /data/user
+  --database-url sqlite:////data/user/comfyui.db
   --extra-model-paths-config /opt/config/extra_model_paths.yaml
 )
 
