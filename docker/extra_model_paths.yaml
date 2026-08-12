@@ -1,0 +1,26 @@
+comfyui-platform:
+  base_path: /data/models
+  is_default: true
+  checkpoints: checkpoints/
+  clip: clip/
+  clip_vision: clip_vision/
+  configs: configs/
+  controlnet: controlnet/
+  diffusers: diffusers/
+  diffusion_models: diffusion_models/
+  embeddings: embeddings/
+  gligen: gligen/
+  hypernetworks: hypernetworks/
+  loras: loras/
+  model_patches: model_patches/
+  style_models: style_models/
+  text_encoders: text_encoders/
+  unet: unet/
+  upscale_models: upscale_models/
+  vae: vae/
+  vae_approx: vae_approx/
+  audio_encoders: audio_encoders/
+  detection: detection/
+  face_restore: face_restore/
+  insightface: insightface/
+  latent_upscale_models: latent_upscale_models/

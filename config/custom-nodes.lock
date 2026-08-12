@@ -1,0 +1,8 @@
+# Public custom nodes shared by every service node.
+# Format: name|git_url|ref
+# Refs are commit SHAs so every host builds the same image.
+ComfyUI-essentials|https://github.com/cubiq/ComfyUI_essentials.git|9d9f4bedfc9f0321c19faf71855e228c93bd0dc9
+ComfyUI-Impact-Pack|https://github.com/ltdrdata/ComfyUI-Impact-Pack.git|429d0159ad429e64d2b3916e6e7be9c22d025c3c
+ComfyUI_IPAdapter_plus|https://github.com/cubiq/ComfyUI_IPAdapter_plus.git|a0f451a5113cf9becb0847b92884cb10cbdec0ef
+ComfyUI_InstantID|https://github.com/cubiq/ComfyUI_InstantID.git|72495e806bc2ab9c41581e15ccaa1bcf83c477e8
+ComfyUI-RMBG|https://github.com/1038lab/ComfyUI-RMBG.git|9edb2bec390091fb9b7fb3d68a64a7af713ea2fc

@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+data/
+models/
+input/
+output/
+temp/
+user/
+custom_nodes/
+ComfyUI/
+*.log
+*.sqlite
+*.db
+__pycache__/
+.pytest_cache/
