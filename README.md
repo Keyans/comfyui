@@ -27,6 +27,9 @@ cp .env.example .env
 If Docker Hub is unavailable on a host, set `CUDA_BASE_IMAGE` in `.env`
 to an accessible registry mirror containing the same NVIDIA CUDA image.
 
+The host Docker daemon must expose the `nvidia` runtime. GPU selection is
+controlled by `GPU_IDS` through `NVIDIA_VISIBLE_DEVICES`.
+
 Update an existing managed node:
 
 ```bash

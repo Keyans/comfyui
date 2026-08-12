@@ -9,6 +9,7 @@ services:
         COMFYUI_REF: ${COMFYUI_REF:-v0.31.0}
     image: keyans/comfyui-node:${COMFYUI_REF:-v0.31.0}
     restart: unless-stopped
+    runtime: nvidia
     ports:
       - "${COMFYUI_PORT:-8288}:8188"
     environment:
@@ -25,7 +26,6 @@ services:
       - ${COMFYUI_USER_DIR:-/srv/comfyui/user}:/data/user
       - ./docker/extra_model_paths.yaml:/opt/config/extra_model_paths.yaml:ro
       - ./workflows:/opt/shared-workflows:ro
-    gpus: all
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8188/system_stats', timeout=5)"]
       interval: 30s
