@@ -11,12 +11,20 @@ from diffusers import QwenImageEditPlusPipeline
 from PIL import Image
 
 
-DEFAULT_MODEL_DIR = Path(
-    os.environ.get(
-        "QWEN_IMAGE_EDIT_MODEL_DIR",
-        "/data/models/Qwen/Qwen-Image-Edit-2511",
+def _default_model_dir():
+    configured = os.environ.get("QWEN_IMAGE_EDIT_MODEL_DIR")
+    if configured:
+        return Path(configured).expanduser()
+
+    candidates = (
+        Path("/data/models/Qwen/Qwen-Image-Edit-2511"),
+        Path.home() / "ComfyUI-Shared/models/Qwen/Qwen-Image-Edit-2511",
+        Path("/home/hoson1/ai-projects/models/Qwen/Qwen-Image-Edit-2511"),
     )
-).expanduser()
+    return next((path for path in candidates if path.is_dir()), candidates[0])
+
+
+DEFAULT_MODEL_DIR = _default_model_dir()
 LEGACY_MODEL_DIR = Path("/home/hoson1/ai-projects/models/Qwen/Qwen-Image-Edit-2511")
 _PIPELINE = None
 _PIPELINE_KEY = None
