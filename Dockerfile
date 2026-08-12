@@ -5,15 +5,16 @@ ARG COMFYUI_REF=v0.31.0
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1 \
-    VIRTUAL_ENV=/opt/venv \
-    PATH=/opt/venv/bin:$PATH
+    PIP_NO_CACHE_DIR=1
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        build-essential ca-certificates cmake git python3 python3-dev \
        python3-pip python3-venv ffmpeg libgl1 libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
+
+ENV VIRTUAL_ENV=/opt/venv \
+    PATH=/opt/venv/bin:$PATH
 
 WORKDIR /opt
 RUN git clone --depth 1 --branch "${COMFYUI_REF}" \
