@@ -58,13 +58,50 @@ Update an existing managed node:
 
 ## Multiple GPU workers
 
-Use one checkout or Git worktree per service instance, or invoke Compose with a separate environment file and project name. Each instance gets:
+Use one checkout with a separate environment file and Compose project name
+for each service instance. Each instance gets:
 
 - A unique `COMPOSE_PROJECT_NAME`
 - A unique `COMFYUI_PORT`
 - One or more `GPU_IDS`
 - Shared read-only model storage when appropriate
 - Separate user database and optional output path
+
+For example, keep host-only files such as `.env.8188` and `.env.8189`
+outside Git:
+
+```bash
+./scripts/instance-up.sh "$PWD/.env.8188"
+./scripts/instance-up.sh "$PWD/.env.8189"
+```
+
+Both instances can mount the same model, input, output, and user directories.
+Set a different `COMFYUI_DATABASE_PATH` and `COMFYUI_TEMP_DIR` for each
+instance. A typical pair uses `/data/user/comfyui.db` for port 8188 and
+`/data/user/comfyui-8189.db` for port 8189.
+
+## Repository workflow
+
+Make shared changes on one machine, then commit and push them:
+
+```bash
+git add config docker scripts workflows Dockerfile docker-compose.yml
+git commit -m "Describe the ComfyUI platform change"
+git push origin main
+```
+
+On each deployment node, update to exactly that shared commit:
+
+```bash
+git pull --ff-only origin main
+./scripts/prepare-sources.sh
+./scripts/instance-up.sh "$PWD/.env.8188"
+./scripts/instance-up.sh "$PWD/.env.8189"
+```
+
+When a GPU host cannot reach GitHub reliably, transfer a Git bundle and the
+verified `vendor/` cache over the LAN instead. Never commit `.env`, model
+weights, user databases, inputs, outputs, or generated media.
 
 ## Git boundaries
 
