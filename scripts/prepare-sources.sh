@@ -11,6 +11,15 @@ fetch_commit() {
   local commit="$2"
   local dest="$3"
   local attempt
+  local actual
+
+  if [[ -d "$dest/.git" ]]; then
+    actual="$(git -C "$dest" rev-parse HEAD 2>/dev/null || true)"
+    if [[ "$actual" == "$commit" ]]; then
+      echo "Already verified: $dest"
+      return
+    fi
+  fi
 
   if [[ ! -d "$dest/.git" ]]; then
     mkdir -p "$(dirname "$dest")"
@@ -32,7 +41,6 @@ fetch_commit() {
 
   git -C "$dest" checkout --detach -q FETCH_HEAD
 
-  local actual
   actual="$(git -C "$dest" rev-parse HEAD)"
   if [[ "$actual" != "$commit" ]]; then
     echo "Source verification failed for $dest: expected $commit, got $actual" >&2
