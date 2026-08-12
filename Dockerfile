@@ -1,4 +1,4 @@
-ARG CUDA_BASE_IMAGE=nvidia/cuda:12.8.1-cudnn-devel-ubuntu22.04
+ARG CUDA_BASE_IMAGE=nvidia/cuda:12.8.1-base-ubuntu22.04
 FROM ${CUDA_BASE_IMAGE}
 
 ARG COMFYUI_REF=v0.31.0
