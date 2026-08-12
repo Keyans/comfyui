@@ -40,6 +40,12 @@ once on a connected machine, then copy them over the LAN:
 The `vendor/` cache is excluded from Git. Its exact revisions are defined by
 `config/comfyui.lock` and `config/custom-nodes.lock`.
 
+Impact Pack's SAM2 integration is optional and is skipped in the base image.
+Its upstream requirement clones GitHub during `pip install`, which is not
+reliable on the GPU hosts. Impact Pack still loads normally; only its
+SAM2-specific nodes remain unavailable until a pinned offline SAM2 package is
+added.
+
 The host Docker daemon must expose the `nvidia` runtime. GPU selection is
 controlled by `GPU_IDS` through `NVIDIA_VISIBLE_DEVICES`.
 

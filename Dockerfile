@@ -32,7 +32,10 @@ RUN chmod +x /usr/local/bin/comfyui-entrypoint \
     && python3 -m pip install -r /opt/ComfyUI/manager_requirements.txt \
     && find /opt/ComfyUI/custom_nodes -mindepth 2 -maxdepth 2 \
        -name requirements.txt \
-       -exec python3 -m pip install -r '{}' \; \
+       -exec sh -c \
+         'sed "\|^git+https://github.com/facebookresearch/sam2$|d" "$1" > /tmp/node-requirements.txt \
+          && python3 -m pip install -r /tmp/node-requirements.txt' _ '{}' \; \
+    && rm -f /tmp/node-requirements.txt \
     && mkdir -p /data/models /data/input /data/output /data/temp /data/user
 
 EXPOSE 8188
