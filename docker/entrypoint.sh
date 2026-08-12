@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+mkdir -p \
+  /data/input \
+  /data/output \
+  /data/temp \
+  /data/user/default
+
 args=(
   --listen "${COMFYUI_HOST:-0.0.0.0}"
   --port "${CONTAINER_PORT:-8188}"

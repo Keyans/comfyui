@@ -29,11 +29,10 @@ RUN python3 -m venv "${VIRTUAL_ENV}" \
 
 COPY docker/entrypoint.sh /usr/local/bin/comfyui-entrypoint
 RUN chmod +x /usr/local/bin/comfyui-entrypoint \
+    && python3 -m pip install -r /opt/ComfyUI/manager_requirements.txt \
     && find /opt/ComfyUI/custom_nodes -mindepth 2 -maxdepth 2 \
-       -name requirements.txt -print0 \
-       | while IFS= read -r -d '' requirements; do \
-           python3 -m pip install -r "${requirements}"; \
-         done \
+       -name requirements.txt \
+       -exec python3 -m pip install -r '{}' \; \
     && mkdir -p /data/models /data/input /data/output /data/temp /data/user
 
 EXPOSE 8188
