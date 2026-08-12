@@ -69,6 +69,16 @@ def _clear_memory():
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
         torch.cuda.ipc_collect()
+    elif torch.backends.mps.is_available():
+        torch.mps.empty_cache()
+
+
+def _runtime_device():
+    if torch.cuda.is_available():
+        return "cuda"
+    if torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
 
 
 def _normalize_model_dir(model_dir):
@@ -153,7 +163,7 @@ def _acquire_pipeline(model_dir, dtype_name, offload_mode, attention_slicing, re
     global _PIPELINE, _PIPELINE_KEY, _ACTIVE_INFERENCE_COUNT, _LAST_USED_AT
     resolved_model_dir = _normalize_model_dir(model_dir)
     key = (str(resolved_model_dir), dtype_name, offload_mode, bool(attention_slicing))
-    runtime_device = "cuda" if torch.cuda.is_available() else "cpu"
+    runtime_device = _runtime_device()
 
     with _PIPELINE_LOCK:
         if reload_pipeline or _PIPELINE is None or _PIPELINE_KEY != key:
